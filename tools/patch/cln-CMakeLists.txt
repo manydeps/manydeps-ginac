@@ -216,8 +216,8 @@ install(FILES
 )
 
 add_subdirectory(src)
-add_subdirectory(tests)
+#add_subdirectory(tests)
 add_subdirectory(include)
-add_subdirectory(examples)
-add_subdirectory(doc)
+#add_subdirectory(examples)
+#add_subdirectory(doc)
 

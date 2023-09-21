@@ -10,6 +10,9 @@ is used (since `gmp` currently fails to build on Windows in this repo).
 Basic setup in both platforms include: CMake and Ninja.
 Also it is necessary to have vcpkg and conan, for the following scripts to work.
 
+- If you want to see only GMP+CLN, check [manydeps-cln](https://github.com/manydeps/manydeps-cln)
+- If you want to see only GMP, check [manydeps-gmp](https://github.com/manydeps/manydeps-gmp)
+
 ## Running the example on vcpkg
 
 Please follow the next steps carefully.

@@ -89,7 +89,7 @@ add_subdirectory(external/ginac)
 # ------------------------------------
 # build ginac into current application
 # ------------------------------------
-target_link_libraries(app_demo PRIVATE ginac cln)
+target_link_libraries(app_demo PRIVATE cln ginac)
 
 #==========
 #  TESTS

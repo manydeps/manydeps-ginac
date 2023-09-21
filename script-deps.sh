@@ -41,6 +41,7 @@ $VCPKG_DIR/vcpkg --vcpkg-root $VCPKG_DIR install --triplet=$VCPKG_TRIPLET
 #echo "Applying PATCH"
 echo "ENFORCING C++20 on GINAC"
 cp tools/patch/ginac-CMakeLists.txt external/ginac/CMakeLists.txt
+cp tools/patch/cln-CMakeLists.txt external/cln/CMakeLists.txt
 
 echo "RUNNING cmake"
 mkdir -p build/

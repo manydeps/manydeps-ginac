@@ -79,6 +79,7 @@ jobs:
       run: |
         echo "APPLYING FIX ON CMAKELISTS FOR C++20"
         cp tools/patch/ginac-CMakeLists.txt external/ginac/CMakeLists.txt
+        cp tools/patch/cln-CMakeLists.txt external/cln/CMakeLists.txt
         echo "RUNNING CMAKE WINDOWS"
         cmake -B ${{ steps.strings.outputs.build-output-dir }} -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }} -S ${{ github.workspace }} --preset=win-x64-release
 

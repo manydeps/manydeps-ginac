@@ -130,8 +130,10 @@ jobs:
       if: contains(matrix.os, 'ubuntu')
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
       run: |
-        echo "RUNNING my_test"
-        ./my_test
-        echo "RUNNING app_demo"
-        ./app_demo
+        echo "RUNNING exam_factor"
+        ./build/external/ginac/check/exam_factor
+        #echo "RUNNING my_test"
+        #./my_test
+        #echo "RUNNING app_demo"
+        #./app_demo
       

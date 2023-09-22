@@ -83,12 +83,12 @@ jobs:
         cp tools/patch/cln-src-CMakeLists.txt external/cln/src/CMakeLists.txt
         echo "RUNNING CMAKE WINDOWS"
         cmake -B ${{ steps.strings.outputs.build-output-dir }} -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }} -S ${{ github.workspace }} --preset=win-x64-release
-        echo "dir external"
-        dir external
-        echo "dir external\ginac"
-        dir external\ginac
-        echo "dir external\ginac\cln\src\"
-        dir external\ginac\cln\src\
+        echo "dir build\external"
+        dir build\external
+        echo "dir build\external\ginac"
+        dir build\external\ginac
+        echo "dir build\external\ginac\cln\src\"
+        dir build\external\ginac\cln\src\
 
     - name: CMake Configure (Ubuntu)
       if: contains(matrix.os, 'ubuntu')

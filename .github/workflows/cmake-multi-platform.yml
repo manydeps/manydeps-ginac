@@ -101,7 +101,19 @@ jobs:
         mkdir -p build/
         (cd build && cmake .. --preset=linux-release)
 
-    - name: Build
+    - name: Build (windows only)
+      if: contains(matrix.os, 'windows')
+      # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
+      run: | 
+        cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
+        echo "dir build\external"
+        dir build\external
+        echo "dir build\external\ginac"
+        dir build\external\ginac
+        echo "dir build\external\ginac\cln\src\"
+        dir build\external\ginac\cln\src\
+
+    - name: Build (generic)
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
       run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
 

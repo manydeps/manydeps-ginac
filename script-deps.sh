@@ -55,5 +55,6 @@ cmake --build build --config Release
 echo "BUILDING example exam_factor (from ginac)"
 cmake --build build --config Release --target exam_factor
 
-./build/my_test
+./build/external/ginac/check/exam_factor
+#./build/my_test
 

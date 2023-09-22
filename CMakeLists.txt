@@ -22,12 +22,10 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # -------------------
 add_library(manydeps-cln-lib INTERFACE)
 target_include_directories(manydeps-cln-lib INTERFACE include/)
+target_link_libraries( manydeps-cln-lib INTERFACE cln) 
 
-add_executable(app_demo src/main.cpp)
-target_link_libraries(app_demo PRIVATE manydeps-cln-lib) #external_folder)
-
-#add_library(external_folder INTERFACE)
-#target_include_directories(external_folder INTERFACE external/)
+#add_executable(app_demo src/main.cpp)
+#target_link_libraries(app_demo PRIVATE manydeps-cln-lib) 
 
 if(UNIX)
 set(CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/build/vcpkg_installed/x64-linux")
@@ -48,7 +46,7 @@ pkg_check_modules(gmpxx REQUIRED IMPORTED_TARGET gmpxx)
 add_library(gmp::gmp ALIAS PkgConfig::gmp)
 add_library(gmp::gmpxx ALIAS PkgConfig::gmpxx)
 #
-target_link_libraries(app_demo PRIVATE gmp::gmp)
+###target_link_libraries(app_demo PRIVATE gmp::gmp)
 #
 else() # WINDOWS?
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
@@ -89,12 +87,15 @@ add_subdirectory(external/ginac)
 # ------------------------------------
 # build ginac into current application
 # ------------------------------------
-target_link_libraries(ginac PRIVATE cln)
-target_link_libraries(app_demo PRIVATE cln ginac)
+#target_link_libraries(ginac PRIVATE cln)
+#target_link_libraries(app_demo PRIVATE cln ginac)
 
 #==========
 #  TESTS
 #----------
+set(USE_TESTS 0)
+
+if(USE_TESTS)
 Include(FetchContent)
 #
 FetchContent_Declare(Catch2 GIT_REPOSITORY https://github.com/catchorg/Catch2.git GIT_TAG v3.3.1)
@@ -122,4 +123,4 @@ target_link_libraries(my_test PRIVATE mpir)
 endif()
 
 catch_discover_tests(my_test)
-
+endif()

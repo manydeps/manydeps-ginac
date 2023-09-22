@@ -131,7 +131,7 @@ jobs:
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
       run: |
         echo "RUNNING exam_factor"
-        ./build/external/ginac/check/exam_factor
+        ./external/ginac/check/exam_factor
         #echo "RUNNING my_test"
         #./my_test
         #echo "RUNNING app_demo"

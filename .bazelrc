@@ -1,4 +1,4 @@
-#build --cxxopt='-std=c++17'
+#build --cxxopt='-std=c++20'
 #build --cxxopt='-Wno-macro-redefined'
 #build --cxxopt='-Wno-builtin-macro-redefined'
 #
@@ -8,5 +8,5 @@
 #build --client_env=CC=clang
 
 # Platform-specific settings
-build:windows --cxxopt=/std:c++17
-build:linux --cxxopt=-std=c++17
+build:windows --cxxopt=/std:c++20
+build:linux --cxxopt=-std=c++20

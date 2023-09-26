@@ -7,3 +7,9 @@
 [submodule "external/ginac"]
 	path = external/ginac
 	url = git://www.ginac.de/ginac.git
+[submodule "thirdparty/ginac"]
+	path = thirdparty/ginac
+	url = git://www.ginac.de/ginac.git
+[submodule "thirdparty/cln"]
+	path = thirdparty/cln
+	url = git://www.ginac.de/cln.git

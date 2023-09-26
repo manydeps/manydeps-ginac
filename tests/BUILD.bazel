@@ -1,0 +1,11 @@
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
+
+package(
+    default_visibility = ["//visibility:public"],
+)
+
+cc_test(
+    name = "my_test_ginac",
+    srcs = ["manydeps_ginac.test.cpp"],  
+    deps = ["@catch2//:catch2_main", "@gmp//:lib"]
+)

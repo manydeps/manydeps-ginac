@@ -1,3 +1,9 @@
 {
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "testMate.cpp.test.advancedExecutables": [
+        {
+            "pattern": "{bazel-bin,build}/**/*{test,check}*"
+            //"pattern": "{build}/**/*{test}*"
+        }
+    ],
 }

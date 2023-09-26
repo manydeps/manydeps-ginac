@@ -30,8 +30,8 @@
 			"editor.formatOnSave": true,
 			"testMate.cpp.test.advancedExecutables": [
 				{
-					//"pattern": "{bazel-bin}/**/*{test}*"
-					"pattern": "{build}/**/*{test}*"
+					"pattern": "{bazel-bin}/**/*{test}*"
+					//"pattern": "{build}/**/*{test}*"
 				}
 			],
 		}

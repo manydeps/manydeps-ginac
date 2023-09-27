@@ -1,5 +1,10 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
-load("@bazel_skylib//rules:expand_template.bzl", "expand_template")
+# load("@bazel_skylib//rules:expand_template.bzl", "expand_template")
+#
+# -----------------------------------------
+# https://docs-legacy.aspect.build/aspect-build/bazel-lib/v0.9.6/docs/expand_make_vars-docgen.html#expand_template
+# https://github.com/aspect-build/bazel-lib
+load("@aspect_bazel_lib//lib:expand_template.bzl", "expand_template")
 
 package(
     default_visibility = ["//visibility:public"],
@@ -21,9 +26,11 @@ expand_template(
     out = "include/cln/config.h",
     substitutions = {
         "@ALIGNOF_VOIDP@" : "8",
-        "#cmakedefine GMP_DEMANDS_UINTD_LONG_LONG" : "/* #undef GMP_DEMANDS_UINTD_LONG_LONG */",
+        # "#cmakedefine GMP_DEMANDS_UINTD_LONG_LONG" : "/* #undef GMP_DEMANDS_UINTD_LONG_LONG */", # linux solution
+        "#cmakedefine GMP_DEMANDS_UINTD_LONG_LONG" : "$(GMP_TYPE_LL)", # WINDOWS IS LONG LONG, LINUX IS LONG
         "#cmakedefine GMP_DEMANDS_UINTD_INT" : "/* #undef GMP_DEMANDS_UINTD_INT */",
-        "#cmakedefine GMP_DEMANDS_UINTD_LONG" : "#define GMP_DEMANDS_UINTD_LONG",
+        # "#cmakedefine GMP_DEMANDS_UINTD_LONG" : "#define GMP_DEMANDS_UINTD_LONG",                # linux solution
+        "#cmakedefine GMP_DEMANDS_UINTD_LONG" : "$(GMP_TYPE_L)",       # WINDOWS IS LONG LONG, LINUX IS LONG
         
     },
     template = "include/cln/config.h.cmake",
@@ -63,7 +70,8 @@ expand_template(
         "@cl_char_bitsize@" : "8",    
         "@cl_short_bitsize@" : "16",
         "@cl_int_bitsize@" : "32",
-        "@cl_long_bitsize@" : "64",
+        ## "@cl_long_bitsize@" : "64", # 32 is windows, 64 is linux
+        "@cl_long_bitsize@" : "$(MY_LONG_SIZE)", # 32 is windows, 64 is linux
         "@cl_long_long_bitsize@" : "64",
         "@cl_pointer_bitsize@" : "64",
         "#cmakedefine short_little_endian" : "#define short_little_endian",
@@ -93,8 +101,10 @@ expand_template(
     substitutions = {
         "#cmakedefine CL_USE_GMP 1" : "#define CL_USE_GMP 1",
         "#cmakedefine ASM_UNDERSCORE" : "/* #undef ASM_UNDERSCORE */",
-        "#cmakedefine CL_HAVE_ATTRIBUTE_FLATTEN" : "#define CL_HAVE_ATTRIBUTE_FLATTEN",
-        "#cmakedefine HAVE_UNISTD_H" : "#define HAVE_UNISTD_H",
+        # "#cmakedefine CL_HAVE_ATTRIBUTE_FLATTEN" : "#define CL_HAVE_ATTRIBUTE_FLATTEN",    # LINUX
+        "#cmakedefine CL_HAVE_ATTRIBUTE_FLATTEN" : "/* #undef CL_HAVE_ATTRIBUTE_FLATTEN */", # WINDOWS
+        # "#cmakedefine HAVE_UNISTD_H" : "#define HAVE_UNISTD_H",    # LINUX
+        "#cmakedefine HAVE_UNISTD_H" : "/* #undef HAVE_UNISTD_H */", # WINDOWS
     },
     template = "autoconf/cl_config.h.cmake",
 )
@@ -112,8 +122,10 @@ cc_library(
 expand_template(
     name = "cln_base_cl_base_config",
     out = "src/base/cl_base_config.h",
-    substitutions = {
-        "#cmakedefine HAVE_GETTIMEOFDAY" : "#define HAVE_GETTIMEOFDAY",
+    substitutions = { 
+        "#cmakedefine HAVE_GETTIMEOFDAY": "$(TIME_UNIX_WIN)",
+        # "#cmakedefine HAVE_GETTIMEOFDAY" : "#define HAVE_GETTIMEOFDAY",    # linux ok: HAVE_GETTIMEOFDAY
+        # "#cmakedefine HAVE_GETTIMEOFDAY" : "/* #undef HAVE_GETTIMEOFDAY */", # WINDOWS DOES NOT HAVE THIS!
         "#cmakedefine GETTIMEOFDAY_DOTS" : "/* #undef GETTIMEOFDAY_DOTS */",
         "#cmakedefine GETTIMEOFDAY_TZP_T" : "/* #undef GETTIMEOFDAY_TZP_T */",
         "#cmakedefine HAVE_TIMES_CLOCK" : "/* #undef HAVE_TIMES_CLOCK */",
@@ -153,7 +165,9 @@ expand_template(
     name = "cln_timing_config",
     out = "src/timing/cl_t_config.h",
     substitutions = {
-        "#cmakedefine HAVE_GETTIMEOFDAY": "#define HAVE_GETTIMEOFDAY",
+        "#cmakedefine HAVE_GETTIMEOFDAY": "$(TIME_UNIX_WIN)",
+        #"#cmakedefine HAVE_GETTIMEOFDAY": "#define HAVE_GETTIMEOFDAY",       # LINUX OK
+        #"#cmakedefine HAVE_GETTIMEOFDAY" : "/* #undef HAVE_GETTIMEOFDAY */", # WINDOWS DOES NOT HAVE THIS!
     },
     template = "src/timing/cl_t_config.h.cmake",
 )

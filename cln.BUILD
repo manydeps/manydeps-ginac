@@ -235,7 +235,7 @@ cc_library(
     includes = ["include/", "src/", "autoconf/",],
     deps = [":cln_generated", "@gmp//:lib"],
     visibility = ["//visibility:public"],
-    linkstatic = 1
+    #linkstatic = 1
 )
 
 # bazel run @cln//:cln_example_fibonacci 10

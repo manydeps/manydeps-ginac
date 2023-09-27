@@ -85,7 +85,7 @@ cc_library(
     includes = ["ginac/", "autoconf/", "ginac/parser/"],
     deps = [ ":ginac_generated", "@cln//:lib"],
     visibility = ["//visibility:public"],
-    linkstatic = 1
+    #linkstatic = 1
 )
 
 # bazel run @ginac//:ginac_check_exam_factor

@@ -30,9 +30,6 @@ jobs:
           - os: windows-latest
             c_compiler: cl
             cpp_compiler: cl
-          - os: windows-latest
-            c_compiler: cl
-            cpp_compiler: cl
           - os: ubuntu-latest
             c_compiler: gcc
             cpp_compiler: g++
@@ -71,7 +68,16 @@ jobs:
         cmd /c msbuild.bat gc LIB x64 Release
         echo "FINISHED build in CMD!"
       shell: cmd
-      
+
+    - name: FIRST Check Lib (WINDOWS)
+      if: contains(matrix.os, 'windows')
+      run: |
+        echo "ls thirdparty/mpir"
+        ls thirdparty/mpir
+        echo "lib /list thirdparty\mpir\lib\x64\Release/mpir.lib"
+        lib /list thirdparty/mpir\lib\x64\Release/mpir.lib
+        echo "Finished FIRST Check Lib"
+
     - name: Get python dependencies
       shell: bash
       run: |
@@ -106,15 +112,31 @@ jobs:
         echo "DISPLAY ERROR, IF OSX"
         cat tools/vcpkg/buildtrees/gmp/autoconf-x64-osx-err.log
 
-
     - name: Check Lib (WINDOWS)
       if: contains(matrix.os, 'windows')
       run: |
         ls tools/vcpkg/packages/mpir_x64-windows-static/lib/*
         echo "lib /list tools/vcpkg/packages/mpir_x64-windows-static/lib/mpir.lib"
         lib /list tools/vcpkg/packages/mpir_x64-windows-static/lib/mpir.lib
+        echo "dumpbin /directives tools/vcpkg/packages/mpir_x64-windows-static/lib/mpir.lib"
+        dumpbin /directives tools/vcpkg/packages/mpir_x64-windows-static/lib/mpir.lib
+        #echo "ls thirdparty/gmp"
+        #ls thirdparty/gmp
+        #echo "ls thirdparty/gmp/.libs"
+        #ls thirdparty/gmp/.libs
+        #echo "lib /list thirdparty/gmp/.libs/gmp.lib"
+        #lib /list thirdparty/gmp/.libs/gmp.lib
+        echo "ls thirdparty/mpir"
+        ls thirdparty/mpir
+        echo "lib /list thirdparty\mpir\lib\x64\Release\mpir.lib"
+        lib /list thirdparty\mpir\lib\x64\Release\mpir.lib
+        echo "dumpbin /directives thirdparty\mpir\lib\x64\Release\mpir.lib"
+        dumpbin /directives thirdparty\mpir\lib\x64\Release\mpir.lib
+        echo "dumpbin /directives thirdparty\mpir\lib\x64\Release\mpirxx.lib"
+        dumpbin /directives thirdparty\mpir\lib\x64\Release\mpirxx.lib
+        echo "Finished Check Lib"
 
-    - name: Build CLN (WINDOWS CMD)
+    - name: Build (WINDOWS CMD)
       if: contains(matrix.os, 'windows')
       run: bazel build @cln//:cln --config windows
       shell: cmd
@@ -133,25 +155,15 @@ jobs:
         bazel run //:app_demo_cln --config windows
       shell: cmd
 
-    - name: Build (WINDOWS)
+    - name: Build All (WINDOWS)
       if: contains(matrix.os, 'windows')
       run: |
-        echo "BUILDING CLN DEPENDENCY (non-verbose)"
-        bazel build @cln//:cln --config windows
-        echo "lib /list bazel-bin\external\cln\cln.lib"
-        lib /list bazel-bin\external\cln\cln.lib
-        echo "dumpbin /directives bazel-bin\external\cln\cln.lib"
-        dumpbin /directives bazel-bin\external\cln\cln.lib
-        echo "BUILDING CATCH2 DEPENDENCY (non-verbose)"
-        bazel build @catch2//:catch2 --config windows
-        echo "BUILDING DEMO CLN (verbose)"
-        bazel build //:app_demo_cln -s --config windows
         echo "BUILDING ALL (verbose)"
         bazel build ... -s --config windows
 
     - name: Build (LINUX)
       if: contains(matrix.os, 'ubuntu')
-      run: bazel build ... --config linux_${{ matrix.c_compiler }}
+      run: bazel build ... -s --config linux_${{ matrix.c_compiler }}
 
     - name: Test (WINDOWS)
       if: contains(matrix.os, 'windows')
@@ -160,4 +172,3 @@ jobs:
     - name: Test (LINUX)
       if: contains(matrix.os, 'ubuntu')
       run: bazel test ... --config linux_${{ matrix.c_compiler }}
-

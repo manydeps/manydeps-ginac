@@ -22,5 +22,5 @@ cc_binary(
     srcs = glob([
         "src/main_cln.cpp"
     ]),
-    deps = ["//include:manydeps-ginac-lib", "@gmp//:lib", "@cln//:cln", "@ginac//:ginac"]
+    deps = ["@cln//:cln"]
 )

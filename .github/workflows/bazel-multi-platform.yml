@@ -101,6 +101,10 @@ jobs:
       run: |
         echo "BUILDING CLN DEPENDENCY (non-verbose)"
         bazel build @cln//:cln --config windows
+        echo "lib /list bazel-bin\external\cln\cln.lib"
+        lib /list bazel-bin\external\cln\cln.lib
+        echo "dumpbin /directives bazel-bin\external\cln\cln.lib"
+        dumpbin /directives bazel-bin\external\cln\cln.lib
         echo "BUILDING CATCH2 DEPENDENCY (non-verbose)"
         bazel build @catch2//:catch2 --config windows
         echo "BUILDING DEMO CLN (verbose)"

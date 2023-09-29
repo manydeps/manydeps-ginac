@@ -9,15 +9,13 @@
 // local library
 #include <cln/string.h>
 
-#include <manydeps-ginac-lib/Testing.hpp>
+// #include <manydeps-ginac-lib/Testing.hpp>
 
 namespace cln {
 extern cl_heap_string* cl_make_heap_string(const char* ptr);
 }
 
 int main() {
-  //
-  int x = basic_testing();
   //
   // testing 'cl_make_heap_string' from library
   std::string str("123");
@@ -26,5 +24,5 @@ int main() {
   cl_free_heap_object(out);
   //
   std::cout << "finished successfully!" << std::endl;
-  return x;
+  return 0;
 }

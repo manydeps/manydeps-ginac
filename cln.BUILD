@@ -242,6 +242,6 @@ cc_library(
 cc_binary(
     name = "cln_example_fibonacci",
     srcs = ["examples/fibonacci.cc"],
-    deps = [":lib"],
+    deps = [":cln"],
     visibility = ["//visibility:public"],
 )

@@ -92,7 +92,7 @@ cc_library(
 cc_test(
     name = "ginac_check_exam_factor",
     srcs = ["check/exam_factor.cpp"],
-    deps = [":lib"],
+    deps = [":ginac"],
     visibility = ["//visibility:public"],
 )
 
@@ -100,7 +100,7 @@ cc_test(
 cc_test(
     name = "ginac_check_exam_paranoia",
     srcs = ["check/exam_paranoia.cpp"],
-    deps = [":lib"],
+    deps = [":ginac"],
     visibility = ["//visibility:public"],
 )
 
@@ -108,6 +108,6 @@ cc_test(
 cc_test(
     name = "ginac_check_exam_pgcd",
     srcs = ["check/exam_pgcd.cpp"],
-    deps = [":lib"],
+    deps = [":ginac"],
     visibility = ["//visibility:public"],
 )

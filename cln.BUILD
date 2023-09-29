@@ -41,6 +41,7 @@ cc_library(
     hdrs = ["include/cln/config.h"],
     include_prefix = ".", 
     visibility = ["//visibility:public"],
+    linkstatic=1
 )
 
 # ----------------------------------------
@@ -59,6 +60,7 @@ cc_library(
     hdrs = ["include/cln/host_cpu.h"],
     include_prefix = ".", 
     visibility = ["//visibility:public"],
+    linkstatic=1
 )
 
 # ----------------------------------------
@@ -91,6 +93,7 @@ cc_library(
     hdrs = ["include/cln/intparam.h"],
     include_prefix = ".", 
     visibility = ["//visibility:public"],
+    linkstatic=1
 )
 
 # ----------------------------------------
@@ -114,6 +117,7 @@ cc_library(
     hdrs = ["autoconf/cl_config.h"],
     include_prefix = ".", 
     visibility = ["//visibility:public"],
+    linkstatic=1
 )
 
 # ----------------------------------------
@@ -138,6 +142,7 @@ cc_library(
     hdrs = ["src/base/cl_base_config.h"],
     include_prefix = ".", 
     visibility = ["//visibility:public"],
+    linkstatic=1
 )
 
 # ----------------------------------------
@@ -157,6 +162,7 @@ cc_library(
     hdrs = ["src/base/cl_gmpconfig.h"],
     include_prefix = ".", 
     visibility = ["//visibility:public"],
+    linkstatic=1
 )
 
 # ----------------------------------------
@@ -177,6 +183,7 @@ cc_library(
     hdrs = ["src/timing/cl_t_config.h"],
     include_prefix = ".", 
     visibility = ["//visibility:public"],
+    linkstatic=1
 )
 
 # ====================================
@@ -193,13 +200,14 @@ cc_library(
         ":cln_timing_config_generated",
         ],
     visibility = ["//visibility:public"],
+    linkstatic=1
 )
 
 # =================================================
 
 # CLN lib
 cc_library(
-    name = "cln",
+    name = "cln", # OUTPUT: cln.lib
     srcs = glob(
         ["src/**/*.c",
         "src/**/*.cc"],
@@ -235,7 +243,7 @@ cc_library(
     includes = ["include/", "src/", "autoconf/",],
     deps = [":cln_generated", "@gmp//:lib"],
     visibility = ["//visibility:public"],
-    #linkstatic = 1
+    linkstatic = 1
 )
 
 # bazel run @cln//:cln_example_fibonacci 10
@@ -244,4 +252,5 @@ cc_binary(
     srcs = ["examples/fibonacci.cc"],
     deps = [":cln"],
     visibility = ["//visibility:public"],
+    linkstatic=1
 )

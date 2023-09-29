@@ -199,7 +199,7 @@ cc_library(
 
 # CLN lib
 cc_library(
-    name = "lib",
+    name = "cln",
     srcs = glob(
         ["src/**/*.c",
         "src/**/*.cc"],

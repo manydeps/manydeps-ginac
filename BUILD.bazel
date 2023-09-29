@@ -12,8 +12,15 @@ sh_binary(
 cc_binary(
     name = "app_demo",
     srcs = glob([
-        "src/**/*.h", 
-        "src/**/*.cpp"
+        "src/main.cpp"
     ]),
-    deps = ["//include:manydeps-ginac-lib", "@gmp//:lib", "@cln//:lib", "@ginac//:lib"]
+    deps = ["//include:manydeps-ginac-lib", "@gmp//:lib", "@cln//:cln", "@ginac//:ginac"]
+)
+
+cc_binary(
+    name = "app_demo_cln",
+    srcs = glob([
+        "src/main_cln.cpp"
+    ]),
+    deps = ["//include:manydeps-ginac-lib", "@gmp//:lib", "@cln//:cln", "@ginac//:ginac"]
 )

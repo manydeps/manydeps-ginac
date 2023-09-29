@@ -63,7 +63,7 @@ cc_library(
         "ginac/**/*.h",
     ]),
     includes = ["ginac/"],
-    deps = ["@cln//:lib"],
+    deps = ["@cln//:cln"],
     visibility = ["//visibility:public"],
 )
 
@@ -71,7 +71,7 @@ cc_library(
 
 # GINAC lib
 cc_library(
-    name = "lib",
+    name = "ginac",
     srcs = glob(
         ["ginac/**/*.cpp",
         "src/**/*.cc"],
@@ -83,7 +83,7 @@ cc_library(
         "autoconf/**/*.h",
     ]),
     includes = ["ginac/", "autoconf/", "ginac/parser/"],
-    deps = [ ":ginac_generated", "@cln//:lib"],
+    deps = [ ":ginac_generated", "@cln//:cln"],
     visibility = ["//visibility:public"],
     #linkstatic = 1
 )

@@ -11,5 +11,5 @@ cc_library(
         "**/*.h",
     ]),
     include_prefix = "manydeps-ginac-lib/",
-    deps = ["@ginac//:lib", "@cln//:lib"]
+    deps = ["@cln//:cln", "@ginac//:ginac"]
 )

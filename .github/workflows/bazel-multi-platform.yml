@@ -100,7 +100,11 @@ jobs:
       if: contains(matrix.os, 'windows')
       run: |
         echo "BUILDING CLN DEPENDENCY (non-verbose)"
-        bazel build @cln//:lib --config windows
+        bazel build @cln//:cln --config windows
+        echo "BUILDING CATCH2 DEPENDENCY (non-verbose)"
+        bazel build @catch2//:catch2 --config windows
+        echo "BUILDING DEMO CLN (verbose)"
+        bazel build //:app_demo_cln -s --config windows
         echo "BUILDING ALL (verbose)"
         bazel build ... -s --config windows
 

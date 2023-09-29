@@ -9,7 +9,7 @@
 
 # /DNDEBUG -DNO_ASM -DNO_ASM_LOOPS
 # Platform-specific settings
-build:windows --cxxopt=-std:c++20 --define=MY_LONG_SIZE=32                           --define=GMP_TYPE_L="/* #undef GMP_DEMANDS_UINTD_LONG */" --define=GMP_TYPE_LL="#define GMP_DEMANDS_UINTD_LONG_LONG" --define=TIME_UNIX_WIN="/* #undef HAVE_GETTIMEOFDAY */" -c opt --cxxopt=-DNO_ASM --cxxopt=-DNO_ASM_LOOPS --cxxopt=/MT --features=fully_static_link  --linkopt=/NODEFAULTLIB:MSVCRT --linkopt=/NODEFAULTLIB:libcpmt
+build:windows --cxxopt=-std:c++20 --define=MY_LONG_SIZE=32                           --define=GMP_TYPE_L="/* #undef GMP_DEMANDS_UINTD_LONG */" --define=GMP_TYPE_LL="#define GMP_DEMANDS_UINTD_LONG_LONG" --define=TIME_UNIX_WIN="/* #undef HAVE_GETTIMEOFDAY */" -c opt --cxxopt=-DNO_ASM --cxxopt=-DNO_ASM_LOOPS --cxxopt=/MT --features=fully_static_link  --linkopt=/NODEFAULTLIB:MSVCRT # --linkopt=/NODEFAULTLIB:libcpmt
 build:linux   --cxxopt=-std=c++20 --define=MY_LONG_SIZE=64                           --define=GMP_TYPE_L="#define GMP_DEMANDS_UINTD_LONG" --define=GMP_TYPE_LL="/* #undef GMP_DEMANDS_UINTD_LONG_LONG */" --define=TIME_UNIX_WIN="#define HAVE_GETTIMEOFDAY"      -c opt
 build:linux_clang --cxxopt=-std=c++20 --client_env=CC=clang --define=MY_LONG_SIZE=64 --define=GMP_TYPE_L="#define GMP_DEMANDS_UINTD_LONG" --define=GMP_TYPE_LL="/* #undef GMP_DEMANDS_UINTD_LONG_LONG */" --define=TIME_UNIX_WIN="#define HAVE_GETTIMEOFDAY"      -c opt
 build:linux_gcc   --cxxopt=-std=c++20 --client_env=CC=gcc   --define=MY_LONG_SIZE=64 --define=GMP_TYPE_L="#define GMP_DEMANDS_UINTD_LONG" --define=GMP_TYPE_LL="/* #undef GMP_DEMANDS_UINTD_LONG_LONG */" --define=TIME_UNIX_WIN="#define HAVE_GETTIMEOFDAY"      -c opt

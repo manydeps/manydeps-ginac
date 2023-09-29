@@ -54,6 +54,24 @@ jobs:
       run: |
         git submodule update --init --recursive
         git pull --recurse-submodules
+
+    - name: GMP Build Native (BASH)
+      if: contains(matrix.os, 'ubuntu')
+      run: |
+        echo "RUNNING SCRIPT ./gmp-install.sh"
+        ./gmp-install.sh
+      shell: bash
+
+    - name: GMP Build Native (CMD)
+      if: contains(matrix.os, 'windows')
+      run: |
+        echo "RUNNING MANUAL BUILD"
+        cd .\thirdparty\mpir\msvc\vs22\
+        echo "building generic version"
+        cmd /c msbuild.bat gc LIB x64 Release
+        echo "FINISHED build in CMD!"
+      shell: cmd
+      
     - name: Get python dependencies
       shell: bash
       run: |

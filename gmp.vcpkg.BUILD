@@ -32,5 +32,5 @@ cc_library(
         "//conditions:default": ["gmp_x64-linux/include/"],
     }),
     visibility = ["//visibility:public"],
-    linkstatic = 1
+    #linkstatic = 1
 )

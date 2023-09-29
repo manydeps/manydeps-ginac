@@ -108,8 +108,12 @@ jobs:
         lib /list bazel-bin\external\cln\cln.lib
         echo "dumpbin /directives bazel-bin\external\cln\cln.lib"
         dumpbin /directives bazel-bin\external\cln\cln.lib
-        echo "BUILDING ALL (verbose)"
-        bazel build ... -s --config windows
+
+    - name: Run CLN demo (WINDOWS)
+      if: contains(matrix.os, 'windows')
+      run: |
+        bazel run //:app_demo_cln --config windows
+      shell: cmd
 
     - name: Build (WINDOWS)
       if: contains(matrix.os, 'windows')

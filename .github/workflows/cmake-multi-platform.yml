@@ -78,17 +78,17 @@ jobs:
       if: contains(matrix.os, 'windows')
       run: |
         echo "APPLYING FIX ON CMAKELISTS FOR C++20"
-        cp tools/patch/ginac-CMakeLists.txt external/ginac/CMakeLists.txt
-        cp tools/patch/cln-CMakeLists.txt external/cln/CMakeLists.txt
-        cp tools/patch/cln-src-CMakeLists.txt external/cln/src/CMakeLists.txt
+        cp tools/patch/ginac-CMakeLists.txt thirdparty/ginac/CMakeLists.txt
+        cp tools/patch/cln-CMakeLists.txt thirdparty/cln/CMakeLists.txt
+        cp tools/patch/cln-src-CMakeLists.txt thirdparty/cln/src/CMakeLists.txt
         echo "RUNNING CMAKE WINDOWS"
         cmake -B ${{ steps.strings.outputs.build-output-dir }} -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }} -S ${{ github.workspace }} --preset=win-x64-release
-        echo "dir build\external"
-        dir build\external
-        echo "dir build\external\ginac"
-        dir build\external\ginac
-        echo "dir build\external\ginac\cln\src\"
-        dir build\external\ginac\cln\src\
+        echo "dir build\thirdparty"
+        dir build\thirdparty
+        echo "dir build\thirdparty\ginac"
+        dir build\thirdparty\ginac
+        echo "dir build\thirdparty\ginac\cln\src\"
+        dir build\thirdparty\ginac\cln\src\
 
     - name: CMake Configure (Ubuntu)
       if: contains(matrix.os, 'ubuntu')
@@ -106,12 +106,12 @@ jobs:
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
       run: | 
         cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
-        echo "dir build\external"
-        dir build\external
-        echo "dir build\external\ginac"
-        dir build\external\ginac
-        echo "dir build\external\ginac\cln\src\"
-        dir build\external\ginac\cln\src\
+        echo "dir build\thirdparty"
+        dir build\thirdparty
+        echo "dir build\thirdparty\ginac"
+        dir build\thirdparty\ginac
+        echo "dir build\thirdparty\ginac\cln\src\"
+        dir build\thirdparty\ginac\cln\src\
 
     - name: Build (generic)
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
@@ -131,7 +131,7 @@ jobs:
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
       run: |
         echo "RUNNING exam_factor"
-        ./external/ginac/check/exam_factor
+        ./thirdparty/ginac/check/exam_factor
         #echo "RUNNING my_test"
         #./my_test
         #echo "RUNNING app_demo"

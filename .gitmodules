@@ -13,3 +13,6 @@
 [submodule "thirdparty/cln"]
 	path = thirdparty/cln
 	url = git://www.ginac.de/cln.git
+[submodule "thirdparty/mpir"]
+	path = thirdparty/mpir
+	url = https://github.com/BrianGladman/mpir

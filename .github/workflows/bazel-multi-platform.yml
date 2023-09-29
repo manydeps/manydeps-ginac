@@ -98,7 +98,11 @@ jobs:
 
     - name: Build (WINDOWS)
       if: contains(matrix.os, 'windows')
-      run: bazel build ... -s --config windows
+      run: |
+        echo "BUILDING CLN DEPENDENCY (non-verbose)"
+        bazel build @cln//:lib --config windows
+        echo "BUILDING ALL (verbose)"
+        bazel build ... -s --config windows
 
     - name: Build (LINUX)
       if: contains(matrix.os, 'ubuntu')

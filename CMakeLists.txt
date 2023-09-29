@@ -10,7 +10,7 @@ else()
 message(STATUS "MAIN CMAKE_TOOLCHAIN_FILE NOT FOUND:" ${CMAKE_TOOLCHAIN_FILE})
 endif()
 
-project(demo-depbox-gmp-project LANGUAGES CXX VERSION 0.0.1)
+project(demo-manydeps-ginac-project LANGUAGES CXX VERSION 0.0.1)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -20,12 +20,12 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # ===================
 # header only library
 # -------------------
-add_library(manydeps-cln-lib INTERFACE)
-target_include_directories(manydeps-cln-lib INTERFACE include/)
-target_link_libraries( manydeps-cln-lib INTERFACE cln) 
+add_library(manydeps-ginac-lib INTERFACE)
+target_include_directories(manydeps-ginac-lib INTERFACE include/)
+target_link_libraries( manydeps-ginac-lib INTERFACE gmp::gmp cln ginac) 
 
-#add_executable(app_demo src/main.cpp)
-#target_link_libraries(app_demo PRIVATE manydeps-cln-lib) 
+add_executable(app_demo src/main.cpp)
+target_link_libraries(app_demo PRIVATE manydeps-ginac-lib) 
 
 if(UNIX)
 set(CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/build/vcpkg_installed/x64-linux")
@@ -65,14 +65,14 @@ set(MPIR_LIB_PATH "${VCPKG_WINDOWS}/lib")
 endif()
 
 # ====================================================
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/external/cln/cmake/modules")
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/thirdparty/cln/cmake/modules")
 # -----------------------------------------------------------------------------------------
 # Override build/gmp-config.cmake from conan (if toolchain is activated) - prefix is first!
 # Note that we need to follow CLN recipes, not conan... as they are slightly different!
 # conan demands find_package(gmp ...) while CLN deals with find_package(GMP ...)
 # So, conan works with gmp_INCLUDE_DIR and CLN requires GMP_INCLUDE_DIR
 # -----------------------------------------------------------------------------------------
-set(CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/external/cln/cmake/modules")
+set(CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/thirdparty/cln/cmake/modules")
 # -----------------------------------------------------------
 # invoke FindGMP.cmake from CLN
 find_package(GMP REQUIRED)
@@ -80,15 +80,15 @@ find_package(GMP REQUIRED)
 # target_link_libraries(app_demo PRIVATE gmp::gmp)  # DONE ALREADY!
 
 # Allow GINAC to find CLN source files
-set(CLN_SOURCE_DIR ${CMAKE_SOURCE_DIR}/external/cln)
+set(CLN_SOURCE_DIR ${CMAKE_SOURCE_DIR}/thirdparty/cln)
 # ====================================================
 
-add_subdirectory(external/ginac)
+add_subdirectory(thirdparty/ginac)
 # ------------------------------------
 # build ginac into current application
 # ------------------------------------
 #target_link_libraries(ginac PRIVATE cln)
-#target_link_libraries(app_demo PRIVATE cln ginac)
+target_link_libraries(app_demo PRIVATE cln ginac)
 
 #==========
 #  TESTS
@@ -117,9 +117,9 @@ add_executable(my_test tests/manydeps_ginac.test.cpp)
 target_link_libraries(my_test PRIVATE Catch2::Catch2 Catch2::Catch2WithMain)
 
 if(UNIX)
-target_link_libraries(my_test PRIVATE gmp::gmp gmp::gmpxx)
+target_link_libraries(my_test PRIVATE gmp::gmp gmp::gmpxx cln ginac)
 else() # WINDOWS?
-target_link_libraries(my_test PRIVATE mpir)
+target_link_libraries(my_test PRIVATE mpir cln ginac)
 endif()
 
 catch_discover_tests(my_test)

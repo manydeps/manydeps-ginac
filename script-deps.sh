@@ -40,9 +40,9 @@ $VCPKG_DIR/vcpkg --vcpkg-root $VCPKG_DIR install --triplet=$VCPKG_TRIPLET
 
 #echo "Applying PATCH"
 echo "ENFORCING C++20 on GINAC"
-cp tools/patch/ginac-CMakeLists.txt external/ginac/CMakeLists.txt
-cp tools/patch/cln-CMakeLists.txt external/cln/CMakeLists.txt
-cp tools/patch/cln-src-CMakeLists.txt external/cln/src/CMakeLists.txt
+cp tools/patch/ginac-CMakeLists.txt thirdparty/ginac/CMakeLists.txt
+cp tools/patch/cln-CMakeLists.txt thirdparty/cln/CMakeLists.txt
+cp tools/patch/cln-src-CMakeLists.txt thirdparty/cln/src/CMakeLists.txt
 
 echo "RUNNING cmake"
 mkdir -p build/
@@ -55,6 +55,6 @@ cmake --build build --config Release
 echo "BUILDING example exam_factor (from ginac)"
 cmake --build build --config Release --target exam_factor
 
-./build/external/ginac/check/exam_factor
+./build/thirdparty/ginac/check/exam_factor
 #./build/my_test
 

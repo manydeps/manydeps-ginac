@@ -7,6 +7,8 @@
 This is a demonstration project from the [ManyDeps](https://github.com/manydeps),
 for the C/C++ [GINAC library](https://www.ginac.de/), using [CLN library from GINAC](https://www.ginac.de/CLN/) with GMP library using package managers (vcpkg and conan) on windows/linux.
 
+**Standard: C++17   (C++20 is not working on windows!)**
+
 This works fine on Windows Visual Studio 2022 and also Linux (including Windows WSL).
 For Linux, the classic `gmp` library is used, but for Windows, the alternative `mpir`
 is used (since `gmp` currently fails to build on Windows in this repo).
@@ -184,6 +186,12 @@ For CLN, the cmake build cannot be made using "-B build",
 since it only works changing directory to build folder (pattern "cd build && cmake ..").
 The failure happens with "AsmUnderscode.cmake" test, and some attempts to solve this issue
 have currently failed.
+
+### Fix on `factor.cpp` file
+
+We cannot use C++20 due to linking errors in windows, so we take C++17.
+However, file `factor.cpp` uses designated initializers from c++20, and need to fix that.
+Please apply that patch in tools/patch before building!
 
 ## License
 

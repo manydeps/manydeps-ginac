@@ -1,12 +1,6 @@
 [submodule "tools/vcpkg"]
 	path = tools/vcpkg
 	url = https://github.com/Microsoft/vcpkg.git
-[submodule "external/cln"]
-	path = external/cln
-	url = git://www.ginac.de/cln.git
-[submodule "external/ginac"]
-	path = external/ginac
-	url = git://www.ginac.de/ginac.git
 [submodule "thirdparty/ginac"]
 	path = thirdparty/ginac
 	url = git://www.ginac.de/ginac.git

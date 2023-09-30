@@ -136,6 +136,13 @@ jobs:
         dumpbin /directives thirdparty\mpir\lib\x64\Release\mpirxx.lib
         echo "Finished Check Lib"
 
+    - name: PATCH GINAC
+      run: |
+        echo "RUNNING PATCH FOR GINAC c++17 (remove designated initializer)"
+        echo "copy c++17 standard patch to factor.cpp"
+        cp ./tools/patch/factor.cpp ./thirdparty/ginac/ginac/
+
+
     - name: Build (WINDOWS CMD)
       if: contains(matrix.os, 'windows')
       run: bazel build @cln//:cln --config windows

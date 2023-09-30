@@ -2345,10 +2345,12 @@ static ex factor_multivariate(const ex& poly, const exset& syms) {
     //                          .syms_wox = syms_wox};
     // error C7555: use of designated initializers requires at least
     // '/std:c++20'
-    factorization_ctx ctx;
-    ctx.poly = poly;
-    ctx.x = x;
-    ctx.syms_wox = syms_wox;
+    // factorization_ctx ctx;
+    // ctx.poly = poly; // CONST
+    // ctx.x = x;       // CONST
+    // ctx.syms_wox = syms_wox;  // CONST
+    //
+    factorization_ctx ctx{poly, x, syms_wox};
     //
     // make polynomial primitive
     poly.unitcontprim(x, ctx.unit, ctx.cont, ctx.pp);

@@ -7,5 +7,6 @@ package(
 cc_test(
     name = "my_test_ginac",
     srcs = ["manydeps_ginac.test.cpp"],  
-    deps = ["@catch2//:catch2_main", "@gmp//:lib"]
+    deps = ["@catch2//:catch2_main", "@gmp//:lib", "@ginac//:ginac"],
+    linkstatic=1
 )

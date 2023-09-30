@@ -67,6 +67,12 @@ jobs:
       run: |
         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
+    - name: PATCH GINAC
+      run: |
+        echo "RUNNING PATCH FOR GINAC c++17 (remove designated initializer)"
+        echo "copy c++17 standard patch to factor.cpp"
+        cp ./tools/patch/factor.cpp ./thirdparty/ginac/ginac/
+
     - name: Configure VCPKG Dependencies (BASH)
       if: contains(matrix.os, 'ubuntu')
       run: |
@@ -77,10 +83,10 @@ jobs:
     - name: CMake Configure (Windows)
       if: contains(matrix.os, 'windows')
       run: |
-        echo "APPLYING FIX ON CMAKELISTS FOR C++20"
-        cp tools/patch/ginac-CMakeLists.txt thirdparty/ginac/CMakeLists.txt
-        cp tools/patch/cln-CMakeLists.txt thirdparty/cln/CMakeLists.txt
-        cp tools/patch/cln-src-CMakeLists.txt thirdparty/cln/src/CMakeLists.txt
+        # echo "APPLYING FIX ON CMAKELISTS FOR C++20"
+        # cp tools/patch/ginac-CMakeLists.txt thirdparty/ginac/CMakeLists.txt
+        # cp tools/patch/cln-CMakeLists.txt thirdparty/cln/CMakeLists.txt
+        # cp tools/patch/cln-src-CMakeLists.txt thirdparty/cln/src/CMakeLists.txt
         echo "RUNNING CMAKE WINDOWS"
         cmake -B ${{ steps.strings.outputs.build-output-dir }} -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }} -S ${{ github.workspace }} --preset=win-x64-release
         echo "dir build\thirdparty"

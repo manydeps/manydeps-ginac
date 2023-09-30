@@ -101,8 +101,10 @@ cc_library(
 expand_template(
     name = "cln_autoconf_cl_config",
     out = "autoconf/cl_config.h",
+    # DISABLED GMP!
     substitutions = {
-        "#cmakedefine CL_USE_GMP 1" : "#define CL_USE_GMP 1",
+        # "#cmakedefine CL_USE_GMP 1" : "#undef CL_USE_GMP",  # IF NOT USING GMP!
+        "#cmakedefine CL_USE_GMP 1" : "#define CL_USE_GMP 1", # IF USING GMP!
         "#cmakedefine ASM_UNDERSCORE" : "/* #undef ASM_UNDERSCORE */",
         # "#cmakedefine CL_HAVE_ATTRIBUTE_FLATTEN" : "#define CL_HAVE_ATTRIBUTE_FLATTEN",    # LINUX
         "#cmakedefine CL_HAVE_ATTRIBUTE_FLATTEN" : "/* #undef CL_HAVE_ATTRIBUTE_FLATTEN */", # WINDOWS
@@ -151,8 +153,10 @@ cc_library(
 expand_template(
     name = "cln_base_cl_gmpconfig",
     out = "src/base/cl_gmpconfig.h",
+    # DISABLED GMP!
     substitutions = {
-        "#cmakedefine CL_USE_GMP 1" : "#define CL_USE_GMP 1",
+        # "#cmakedefine CL_USE_GMP 1" : "#undef CL_USE_GMP",  # IF NOT USING GMP!
+        "#cmakedefine CL_USE_GMP 1" : "#define CL_USE_GMP 1", # IF USING GMP!
     },
     template = "src/base/cl_gmpconfig.h.cmake",
 )
@@ -207,7 +211,7 @@ cc_library(
 
 # CLN lib
 cc_library(
-    name = "cln", # OUTPUT: cln.lib
+    name = "cln", # OUTPUT: cln.lib ?
     srcs = glob(
         ["src/**/*.c",
         "src/**/*.cc"],
@@ -241,10 +245,35 @@ cc_library(
         "src/real/algebraic/cl_RA_sqrt.cc",
     ]),
     includes = ["include/", "src/", "autoconf/",],
+    
     deps = [":cln_generated", "@gmp//:lib"],
+    #deps = [":cln_generated"], # DISABLED GMP!
     visibility = ["//visibility:public"],
-    linkstatic = 1
 )
+
+cc_library(
+    name="cln_shared",
+    linkstatic = False,
+    # linkstatic False means to generate .so / .dll
+    #
+    ###linkshared=1 # NOT AVAILABLE IN cc_library
+    # CANNOT USE linkshared HERE
+    #
+    alwayslink = True,   # important (According to...)
+    #
+    # alwayslink ON will generate libcln.lo and libcln.so (NOT libcln.a)
+    #
+    # https://stackoverflow.com/questions/51689092/playing-with-bazel-c-tutorials-build-does-not-create-use-shared-libraries
+    # copts=["-fPIC"],
+    deps = [":cln"]
+)
+
+# to use as dynamic_deps = [":cln_shared_experimental"]
+#cc_shared_library(
+#    name="cln_shared_experimental",
+#    # shared_lib_name = "cln.so" # BUT, IN WINDOWS?
+#    deps=[":cln"]
+#)
 
 # bazel run @cln//:cln_example_fibonacci 10
 cc_binary(

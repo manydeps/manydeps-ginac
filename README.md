@@ -7,7 +7,9 @@
 This is a demonstration project from the [ManyDeps](https://github.com/manydeps),
 for the C/C++ [GINAC library](https://www.ginac.de/), using [CLN library from GINAC](https://www.ginac.de/CLN/) with GMP library using package managers (vcpkg and conan) on windows/linux.
 
-**Standard: C++17   (C++20 is not working on windows!)**
+![C++17](https://img.shields.io/badge/std-c%2B%2B17-blue) [![C++20_/permissive](https://img.shields.io/badge/std-c%2B%2B20_%2Fpermissive-blue)](https://devblogs.microsoft.com/cppblog/msvc-cpp20-and-the-std-cpp20-switch/)
+
+***Beware that c++20 only works with /permissive flag on windows, otherwise we get link errors LNK2019***.
 
 This works fine on Windows Visual Studio 2022 and also Linux (including Windows WSL).
 For Linux, the classic `gmp` library is used, but for Windows, the alternative `mpir`

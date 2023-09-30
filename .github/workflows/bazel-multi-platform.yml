@@ -69,7 +69,7 @@ jobs:
         echo "FINISHED build in CMD!"
       shell: cmd
 
-    - name: FIRST Check Lib (WINDOWS)
+    - name: FIRST Check Lib MPIR (WINDOWS)
       if: contains(matrix.os, 'windows')
       run: |
         echo "ls thirdparty/mpir"
@@ -112,7 +112,7 @@ jobs:
         echo "DISPLAY ERROR, IF OSX"
         cat tools/vcpkg/buildtrees/gmp/autoconf-x64-osx-err.log
 
-    - name: Check Lib (WINDOWS)
+    - name: Check Lib MPIR (WINDOWS)
       if: contains(matrix.os, 'windows')
       run: |
         ls tools/vcpkg/packages/mpir_x64-windows-static/lib/*
@@ -120,12 +120,6 @@ jobs:
         lib /list tools/vcpkg/packages/mpir_x64-windows-static/lib/mpir.lib
         echo "dumpbin /directives tools/vcpkg/packages/mpir_x64-windows-static/lib/mpir.lib"
         dumpbin /directives tools/vcpkg/packages/mpir_x64-windows-static/lib/mpir.lib
-        #echo "ls thirdparty/gmp"
-        #ls thirdparty/gmp
-        #echo "ls thirdparty/gmp/.libs"
-        #ls thirdparty/gmp/.libs
-        #echo "lib /list thirdparty/gmp/.libs/gmp.lib"
-        #lib /list thirdparty/gmp/.libs/gmp.lib
         echo "ls thirdparty/mpir"
         ls thirdparty/mpir
         echo "lib /list thirdparty\mpir\lib\x64\Release\mpir.lib"
@@ -143,9 +137,9 @@ jobs:
         cp ./tools/patch/factor.cpp ./thirdparty/ginac/ginac/
 
 
-    - name: Build (WINDOWS CMD)
+    - name: Build CLN (WINDOWS CMD)
       if: contains(matrix.os, 'windows')
-      run: bazel build @cln//:cln --config windows
+      run: bazel build @cln//:cln --config windows_mt
       shell: cmd
 
     - name: Check CLN lib (WINDOWS)
@@ -159,14 +153,14 @@ jobs:
     - name: Run CLN demo (WINDOWS)
       if: contains(matrix.os, 'windows')
       run: |
-        bazel run //:app_demo_cln --config windows
+        bazel run //:app_demo_cln --config windows_mt
       shell: cmd
 
     - name: Build All (WINDOWS)
       if: contains(matrix.os, 'windows')
       run: |
         echo "BUILDING ALL (verbose)"
-        bazel build ... -s --config windows
+        bazel build ... -s --config windows_mt
 
     - name: Build (LINUX)
       if: contains(matrix.os, 'ubuntu')
@@ -174,7 +168,7 @@ jobs:
 
     - name: Test (WINDOWS)
       if: contains(matrix.os, 'windows')
-      run: bazel test ... --config windows
+      run: bazel test ... --config windows_mt
 
     - name: Test (LINUX)
       if: contains(matrix.os, 'ubuntu')

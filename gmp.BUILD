@@ -21,7 +21,7 @@ cc_library(
     srcs = select({
         "@bazel_tools//src/conditions:windows": glob(["mpir/lib/**/mpir.lib", "mpir/lib/**/mpirxx.lib"]),
         "@bazel_tools//src/conditions:darwin": glob(["gmp_x64-osx/lib/**/*.a"]),
-        "//conditions:default": glob(["gmp/.libs/**/libgmp.a", "gmp/.libs/**/libgmpxx.a", "gmp/.libs/**/libgmp.so"]),
+        "//conditions:default": glob(["gmp/.libs/**/libgmp.a", "gmp/.libs/**/libgmp.so"]),
     }),
     #hdrs = glob(["vcpkg_installed/x64-linux/include/**/*.h"]),
     hdrs = select({

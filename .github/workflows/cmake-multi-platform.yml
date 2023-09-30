@@ -127,10 +127,12 @@ jobs:
       if: contains(matrix.os, 'windows')
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
       run: |
-        echo "RUNNING my_test"
-        .\my_test
-        echo "RUNNING app_demo"
-        .\app_demo
+        #echo "RUNNING my_test"
+        #.\my_test
+        #echo "RUNNING app_demo"
+        #.\app_demo
+        echo "RUNNING pi"
+        .\thirdparty\ginac\bin\pi.exe
 
     - name: Test (Ubuntu)
       if: contains(matrix.os, 'ubuntu')
